@@ -9,3 +9,9 @@ Firstly we setup project.
 6: create routes using react router dom
 7: Create Header Component
 npm i react-icons  (for use of icons)
+
+8: API :
+make a folder of API(separate from client). 
+go to the root folder (cd ..)
+(MERN-ESTATE) npm init -y
+Make file index.js in api as the package.json has it.
