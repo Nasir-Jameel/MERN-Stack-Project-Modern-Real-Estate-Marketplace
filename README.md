@@ -4,5 +4,8 @@ Firstly we setup project.
 1: Installation of react with vite and tailwind css with vite.
 2: installation of necessary extensions.(ES7, tailwindCSs intellisense, prettier, console ninja, auto Rename Tag)
 3: Initialize git.
-4: creating pages and routes (src => creat folder pages > About.jsx, Home.jsx,Profile.jsx, SignIn.jsx, SignUp.jsx)
-5: install react router dom ( npm i react-router-dom  )
+4: install react router dom ( npm i react-router-dom  ) 
+5: creating pages and routes (src => creat folder pages > About.jsx, Home.jsx,Profile.jsx, SignIn.jsx, SignUp.jsx)
+6: create routes using react router dom
+7: Create Header Component
+npm i react-icons  (for use of icons)
