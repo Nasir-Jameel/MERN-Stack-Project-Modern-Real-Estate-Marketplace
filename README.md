@@ -15,3 +15,5 @@ make a folder of API(separate from client).
 go to the root folder (cd ..)
 (MERN-ESTATE) npm init -y
 Make file index.js in api as the package.json has it.
+npm i nodemon and express. after creating & running server
+connect the database. npm i mongoose
