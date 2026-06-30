@@ -1,8 +1,10 @@
-const express = require("express")
-const mongoose = require('mongoose');
+import express from "express"
+import mongoose from "mongoose";
+import userRouter from "./routes/user.route.js"
+import dotenv from "dotenv"
 
-require("dotenv").config();
-
+dotenv.config();
+const app = express()
 
 mongoose.connect(process.env.MONGO)
   .then(() => {
@@ -13,7 +15,8 @@ mongoose.connect(process.env.MONGO)
   });
 
 
-const app = express();
+
+app.use("/api/user", userRouter)
 
 app.listen(3000, ()=>{
     console.log("The server is running")
