@@ -30,3 +30,5 @@ New Folder => auth => sign up
 post localhose:3000/api/auth/signup (send) => body=> json {"uername":"","email":"" , "password": ""}
 now we have to check the database to make sure that user has created
 We have to hash the password to avoide hacking by encryption.(npm i bcryptjs)
+creat a middleware a function to handle error.
+we use to add a function in api(utils/error.js) to throw error(someone has added a password with not enough characters.)
