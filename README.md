@@ -17,7 +17,7 @@ go to the root folder (cd ..)
 Make file index.js in api as the package.json has it.
 npm i nodemon and express. after creating & running server
 connect the database. npm i mongoose 
-create user model(make a folder (models) in api and make a file in models(user.model.js))
+create user model(make a folder (models) in api and make a file in models(user.model.js)).
 create test api route(make 2 more folders(controllers, routes) in api)
 controllers(fucnctions(req,res))
 routes(routes of users(router.get))
