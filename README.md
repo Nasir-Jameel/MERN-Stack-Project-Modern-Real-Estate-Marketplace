@@ -20,4 +20,13 @@ connect the database. npm i mongoose
 create user model(make a folder (models) in api and make a file in models(user.model.js))
 create test api route(make 2 more folders(controllers, routes) in api)
 controllers(fucnctions(req,res))
-routes(routes of users)
+routes(routes of users(router.get))
+Authentication: ( as the authentication is very important so we have to create a separate file for this)
+create sign up api route (create username,email and password) from client side and store it in database.
+auth.route.js(router.post)  in routes and auth 
+we install insomnia for for storing user as a test.
+insomnia => create collection => mern-state =>  clicked create.
+New Folder => auth => sign up
+post localhose:3000/api/auth/signup (send) => body=> json {"uername":"","email":"" , "password": ""}
+now we have to check the database to make sure that user has created
+We have to hash the password to avoide hacking by encryption.(npm i bcryptjs)
