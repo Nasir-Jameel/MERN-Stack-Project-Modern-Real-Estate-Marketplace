@@ -34,3 +34,5 @@ creat a middleware a function to handle error.
 we use to add a function in api(utils/error.js) to throw error(someone has added a password with not enough characters.)
 Sign up Ui page
 complete signup page functionality (onchange, handleChange)
+created sign api route
+completed sign in page functionality(copied signup page edit )
