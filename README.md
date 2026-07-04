@@ -36,3 +36,5 @@ Sign up Ui page
 complete signup page functionality (onchange, handleChange)
 created sign api route
 completed sign in page functionality(copied signup page edit ).
+Apply redux toolkit.(also install extention of redux toolkit on chrome browser)
+add redux persist(installation and apply)
