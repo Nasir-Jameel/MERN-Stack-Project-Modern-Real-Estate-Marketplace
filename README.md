@@ -34,7 +34,7 @@ creat a middleware a function to handle error.
 we use to add a function in api(utils/error.js) to throw error(someone has added a password with not enough characters.)
 Sign up Ui page
 complete signup page functionality (onchange, handleChange)
-created sign api route
+created sign api route.
 completed sign in page functionality(copied signup page edit ).
 Apply redux toolkit.(also install extention of redux toolkit on chrome browser)
 add redux persist(installation and apply) to store userdata in local storage
