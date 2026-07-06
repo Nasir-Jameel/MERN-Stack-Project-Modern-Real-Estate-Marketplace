@@ -8,7 +8,7 @@ Firstly we setup project.
 5: creating pages and routes (src => creat folder pages > About.jsx, Home.jsx,Profile.jsx, SignIn.jsx, SignUp.jsx)
 6: create routes using react router dom
 7: Create Header Component
-npm i react-icons  (for use of icons)
+npm i react-icons  (for use of icons).
 
 8: API :
 make a folder of API(separate from client). 
@@ -34,7 +34,8 @@ creat a middleware a function to handle error.
 we use to add a function in api(utils/error.js) to throw error(someone has added a password with not enough characters.)
 Sign up Ui page
 complete signup page functionality (onchange, handleChange)
-created sign api route
+created sign api route.
 completed sign in page functionality(copied signup page edit ).
 Apply redux toolkit.(also install extention of redux toolkit on chrome browser)
 add redux persist(installation and apply) to store userdata in local storage
+.
