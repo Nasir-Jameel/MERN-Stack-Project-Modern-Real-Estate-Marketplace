@@ -8,7 +8,7 @@ Firstly we setup project.
 5: creating pages and routes (src => creat folder pages > About.jsx, Home.jsx,Profile.jsx, SignIn.jsx, SignUp.jsx)
 6: create routes using react router dom
 7: Create Header Component
-npm i react-icons  (for use of icons)
+npm i react-icons  (for use of icons).
 
 8: API :
 make a folder of API(separate from client). 
