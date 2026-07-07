@@ -8,14 +8,19 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 dotenv.config();
 
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => {
-    console.log('Connected to MongoDB!');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// Safe-check agar MONGO variable Vercel pa missing ho
+if (!process.env.MONGO) {
+  console.error("ERROR: MONGO environment variable is missing on Vercel!");
+} else {
+  mongoose
+    .connect(process.env.MONGO)
+    .then(() => {
+      console.log('Connected to MongoDB!');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 const __dirname = path.resolve();
 const app = express();
@@ -31,8 +36,8 @@ app.use('/api/listing', listingRouter);
 // Frontend Static Files Serve
 app.use(express.static(path.join(__dirname, '/client/dist')));
 
-// Wildcard Route for Single Page Application (React)
-app.get('*', (req, res) => {
+// 📍 FIX: Express 5 ke liye regex-based fallback route (taake PathError na aaye)
+app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
@@ -47,5 +52,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 📍 FIX: app.listen() mita kar module ko export karein (Vercel Requirement)
 export default app;
