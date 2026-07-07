@@ -12,22 +12,23 @@ export default defineConfig({
       }
     },
   },
-    headers: { 
-      "Cross-Origin-Opener-Policy": "same-origin",
+
+  headers: {
+    "Cross-Origin-Opener-Policy": "same-origin",
   },
+
   plugins: [
     react(),
     tailwindcss(),
   ],
+
   resolve: {
     alias: {
-      // Fixes the redux-persist setItem bug by pointing to the clean ESM bundle
       'redux-persist/lib/storage': 'redux-persist/es/storage',
     },
   },
-})
-export default defineConfig({
+
   build: {
     outDir: "dist"
   }
-});
+})
