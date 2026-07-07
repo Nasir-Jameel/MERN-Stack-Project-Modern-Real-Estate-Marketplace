@@ -8,7 +8,7 @@ export default function ListingItem({ listing }) {
         <img
           src={
             listing.imageUrls[0] ||
-            'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'
+            'https://www.framesplus.co.uk/cdn/shop/products/a3dee21d-d36f-4a47-9798-94501a94f6da.jpg?v=1671188334&width=400'
           }
           alt='listing cover'
           className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'

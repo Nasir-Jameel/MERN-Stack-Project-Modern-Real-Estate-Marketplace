@@ -10,28 +10,34 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
-  if (req.user.id !== req.params.id)
+  if (req.user.id !== req.params.id) {
     return next(errorHandler(401, 'You can only update your own account!'));
+  }
+  
   try {
+    const updateFields = {};
+
+    // Dynamic property generation prevents overwriting existing data with 'undefined'
+    if (req.body.username) updateFields.username = req.body.username;
+    if (req.body.email) updateFields.email = req.body.email;
+    if (req.body.avatar) updateFields.avatar = req.body.avatar;
+    
+    // Non-blocking asynchronous hashing algorithm
     if (req.body.password) {
-      req.body.password = bcryptjs.hashSync(req.body.password, 10);
+      updateFields.password = await bcryptjs.hash(req.body.password, 10);
     }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      {
-        $set: {
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
-          avatar: req.body.avatar,
-        },
-      },
-      { new: true }
+      { $set: updateFields },
+      { new: true, runValidators: true }
     );
 
-    const { password, ...rest } = updatedUser._doc;
+    if (!updatedUser) {
+      return next(errorHandler(404, 'User not found!'));
+    }
 
+    const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
   } catch (error) {
     next(error);
@@ -39,39 +45,51 @@ export const updateUser = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
-  if (req.user.id !== req.params.id)
+  if (req.user.id !== req.params.id) {
     return next(errorHandler(401, 'You can only delete your own account!'));
+  }
+  
   try {
-    await User.findByIdAndDelete(req.params.id);
-    res.clearCookie('access_token');
-    res.status(200).json('User has been deleted!');
+    const userToDelete = await User.findById(req.params.id);
+    if (!userToDelete) {
+      return next(errorHandler(404, 'User not found!'));
+    }
+
+    // Cascade delete safety mechanism: Erase all properties tied to this owner profile
+    await Listing.deleteMany({ userRef: req.params.id });
+    await userToDelete.deleteOne();
+
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    });
+    
+    res.status(200).json('User and all associated listings have been deleted!');
   } catch (error) {
     next(error);
   }
 };
 
 export const getUserListings = async (req, res, next) => {
-  if (req.user.id === req.params.id) {
-    try {
-      const listings = await Listing.find({ userRef: req.params.id });
-      res.status(200).json(listings);
-    } catch (error) {
-      next(error);
-    }
-  } else {
+  if (req.user.id !== req.params.id) {
     return next(errorHandler(401, 'You can only view your own listings!'));
+  }
+  
+  try {
+    const listings = await Listing.find({ userRef: req.params.id });
+    res.status(200).json(listings);
+  } catch (error) {
+    next(error);
   }
 };
 
 export const getUser = async (req, res, next) => {
   try {
-    
     const user = await User.findById(req.params.id);
-  
     if (!user) return next(errorHandler(404, 'User not found!'));
   
     const { password: pass, ...rest } = user._doc;
-  
     res.status(200).json(rest);
   } catch (error) {
     next(error);

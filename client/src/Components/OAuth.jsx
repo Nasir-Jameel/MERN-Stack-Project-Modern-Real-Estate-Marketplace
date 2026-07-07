@@ -4,14 +4,19 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
+// 🟢 Inko component ke bahar initialize karein taaki re-render par crash na ho
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+// Agar aap custom account select screen chahte hain to:
+provider.setCustomParameters({ prompt: 'select_account' });
+
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleGoogleClick = async () => {
     try {
-      const provider = new GoogleAuthProvider();
-      const auth = getAuth(app);
-
+      // 🟢 Ab yeh bina kisi delay ke direct trigger hoga
       const result = await signInWithPopup(auth, provider);
 
       const res = await fetch('/api/auth/google', {
@@ -32,6 +37,7 @@ export default function OAuth() {
       console.log('could not sign in with google', error);
     }
   };
+  
   return (
     <button
       onClick={handleGoogleClick}

@@ -1,13 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
 import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
-import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
@@ -30,40 +23,44 @@ export default function Profile() {
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
-  // firebase storage
-  // allow read;
-  // allow write: if
-  // request.resource.size < 2 * 1024 * 1024 &&
-  // request.resource.contentType.matches('image/.*')
-
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
   }, [file]);
 
+  // 🟢 Firebase Storage ki jagah Cloudinary
   const handleFileUpload = (file) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setFilePerc(Math.round(progress));
-      },
-      (error) => {
-        setFileUploadError(true);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, avatar: downloadURL })
-        );
-      }
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      'POST',
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+      }/image/upload`
     );
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100);
+        setFilePerc(progress);
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        setFormData({ ...formData, avatar: response.secure_url });
+      } else {
+        setFileUploadError(true);
+      }
+    };
+
+    xhr.onerror = () => setFileUploadError(true);
+    xhr.send(data);
   };
 
   const handleChange = (e) => {
