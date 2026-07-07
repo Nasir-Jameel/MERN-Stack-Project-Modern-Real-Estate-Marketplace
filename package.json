@@ -4,9 +4,10 @@
   "description": "This is my MERN Stack project that is basically MERN stack Real Estate Marketplace.\r Firstly we setup project.\r 1: Installation of react with vite and tailwind css with vite.\r 2: installation of necessary extensions.(ES7, tailwindCSs intellisense, prettier, console ninja, auto Rename Tag)\r 3: Initialize git.\r 4: install react router dom ( npm i react-router-dom  ) \r 5: creating pages and routes (src => creat folder pages > About.jsx, Home.jsx,Profile.jsx, SignIn.jsx, SignUp.jsx)\r 6: create routes using react router dom\r 7: Create Header Component\r npm i react-icons  (for use of icons)",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon api/index.js",
-    "start": "node api/index.js"
-  },
+  "dev": "nodemon api/index.js",
+  "start": "node api/index.js",
+  "build": "npm install --prefix client && npm run build --prefix client"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nasir-Jameel/MERN-Stack-Project-Modern-Real-Estate-Marketplace.git"
